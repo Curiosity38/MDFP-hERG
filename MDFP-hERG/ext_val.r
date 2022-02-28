@@ -1,14 +1,11 @@
-setwd("/home/zl/zl/MDFP-hERG-3/ext_val")
-
 load("../ALLFP-ML.rData")
 
 library(tidyverse)
 library(caret)
 source("../scatterplot.r")
 
-#读入数据
+#Read data
 IC50 <- read.csv("IC50-938.csv", stringsAsFactors  = FALSE, header = TRUE)
-# pIC50 <- select(IC50,-IC50)
 pIC50 <- IC50
 
 
@@ -32,9 +29,8 @@ ALLFP <- left_join(ALLFP, select(FP3DFP, -pIC50), by = "Name")
 ALLFP <- left_join(ALLFP, select(PropertyFP, -pIC50), by = "Name")
 ALLFP <- left_join(ALLFP, select(ECFP4, -pIC50), by = "Name")
 
-# ALLFP <- ALLFP[-c(454:481),]
 
-#选择RFE选出的特征
+#Choose features seleted by RFE
 MDFP_rfe_predictors <- read.csv(file = "../MDFP_rfe_predictors.csv", row.names = 1)
 MDFP3D11_rfe_predictors <- read.csv(file = "../MDFP3D11_rfe_predictors.csv", row.names = 1)
 BaselineFP_rfe_predictors <- read.csv(file = "../BaselineFP_rfe_predictors.csv", row.names = 1)
@@ -78,7 +74,7 @@ ext_val_pIC50 <- ext_val_ALLFP$pIC50
 	metric_test_consensus_2 <- postResample(pred = consensus_pred_2, obs = ext_val_pIC50)
 	plot_scatter(pred=consensus_pred_2, obs=ext_val_pIC50, FP="ALLFP", ML=paste0("consensus_2", "_extALL"))
 
-	#输出结果
+	#Print results
 	metric_test <- bind_rows(svm=metric_test_svm, gbm=metric_test_gbm, rf=metric_test_rf, kknn=metric_test_kknn, consensus=metric_test_consensus, consensus_2=metric_test_consensus_2, .id = "method") %>% 
 					select(method, RMSE, Rsquared, MAE)
 					
