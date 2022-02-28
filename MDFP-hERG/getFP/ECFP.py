@@ -9,7 +9,9 @@ def add_atom_index(mol):
     for i in range(atoms):
         mol.GetAtomWithIdx(i).SetProp('molAtomMapNumber', str(mol.GetAtomWithIdx(i).GetIdx()))
     return mol
-ot = open("D:\getFP\otecfp.csv", 'w+')
+cwd = os.getcwd()
+path = cwd+'/'
+ot = open("path+otecfp.csv", 'w+')
 
 for naismile in naismiles:
     try:
