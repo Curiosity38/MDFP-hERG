@@ -74,7 +74,7 @@ ext_val_pIC50 <- ext_val_ALLFP$pIC50
 	metric_test_consensus_2 <- postResample(pred = consensus_pred_2, obs = ext_val_pIC50)
 	plot_scatter(pred=consensus_pred_2, obs=ext_val_pIC50, FP="ALLFP", ML=paste0("consensus_2", "_extALL"))
 
-	#Print results
+	#Output results
 	metric_test <- bind_rows(svm=metric_test_svm, gbm=metric_test_gbm, rf=metric_test_rf, kknn=metric_test_kknn, consensus=metric_test_consensus, consensus_2=metric_test_consensus_2, .id = "method") %>% 
 					select(method, RMSE, Rsquared, MAE)
 					
