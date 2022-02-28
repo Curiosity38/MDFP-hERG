@@ -1,11 +1,8 @@
-setwd("/home/zl/zl/MDFP-hERG-3")
-
 library(tidyverse)
 library(caret)
 source("scatterplot.r")
-#读入数据
+#Read data
 IC50 <- read.csv("IC50_all.csv", stringsAsFactors  = FALSE, header = TRUE)
-# pIC50 <- select(IC50,-IC50)
 pIC50 <- IC50
 
 
@@ -20,32 +17,31 @@ MDFP_MDFP3D11 <- left_join(select(MDFP, -pIC50, -Training.Test), MDFP3D11, by = 
 MDFP_train <- filter(MDFP_MDFP3D11, Training.Test == "Training") %>% select(-Name, -Training.Test)
 MDFP_test <- filter(MDFP_MDFP3D11, Training.Test == "Test") %>% select(-Name, -Training.Test)
 
-#选择RFE选出的特征
+#Choose features seleted by RFE
 MDFP_rfe_predictors <- read.csv(file = "MDFP_rfe_predictors.csv", row.names = 1)
 MDFP3D11_rfe_predictors <- read.csv(file = "MDFP3D11_rfe_predictors.csv", row.names = 1)
 rfe_selected_predictors <- c(as.character(MDFP_rfe_predictors$x), as.character(MDFP3D11_rfe_predictors$x))
 MDFP_train <- select(MDFP_train, pIC50, all_of(rfe_selected_predictors))
 
 # Remove Zero- and Near Zero-Variance Predictors
-# MDFP_train <- MDFP_train[,-(nearZeroVar(MDFP_train))]
 cor_pearson <- cor(MDFP_train, MDFP_train$pIC50, method = "pearson")
 colnames(cor_pearson)[1] <- "pearson"
 cor_pearson <- arrange(data.frame(cor_pearson), desc(abs(pearson)))
 
 
 
-#多核并行计算
+#Multi-core parallel computing
 library(doMC)
 registerDoMC(cores = 20)
 
 
 
-#使用10个不同的随机种子进行训练，2^seq(1,10)
+#Use 10 different random seeds for training, 2^seq(1,10)
 metric_cv_all <- data.frame()
 metric_test_all <- data.frame()
 for (seed in 2^seq(1,10)){
 
-	#10次重复的5折交叉验证
+	#Five fold cross validation for 10 repetitions
 	fitControl1 <- trainControl(method = "repeatedcv", 
 							   number = 5, 
 							   repeats = 1, 
@@ -101,7 +97,7 @@ for (seed in 2^seq(1,10)){
 
 
 
-	#测试集验证
+	#Test set validation
 	metric_cv_svm <- svmFit$results %>% top_n(1, desc(RMSE))
 	svmFit_pred <- predict(svmFit, newdata=MDFP_test)
 	metric_test_svm <- postResample(pred = svmFit_pred, obs = MDFP_test$pIC50)
@@ -146,7 +142,7 @@ for (seed in 2^seq(1,10)){
 	metric_test_consensus_2 <- postResample(pred = consensus_pred_2, obs = MDFP_test$pIC50)
 	plot_scatter(pred=consensus_pred_2, obs=MDFP_test$pIC50, FP="MDFP_MDFP3D11", ML=paste0("consensus_2", "_seed", seed))
 
-	#合并结果
+	#Combie results
 	metric_cv <- bind_rows(svm=metric_cv_svm, gbm=metric_cv_gbm, rf=metric_cv_rf, kknn=metric_cv_kknn, .id = "method") %>%
 					select(method, RMSE, Rsquared, MAE, RMSESD, RsquaredSD, MAESD) %>%
 					mutate(seed=seed)
@@ -158,7 +154,7 @@ for (seed in 2^seq(1,10)){
 	metric_test_all <- bind_rows(metric_test_all, metric_test)
 }
 
-#汇总结果
+#Summerized results
 metric_cv_all_summary <- filter(metric_cv_all, RMSE < 2.0) %>%
 							group_by(method) %>%
 							summarise(across(RMSE:MAE, .fns=list(mean=mean,sd=sd)))
