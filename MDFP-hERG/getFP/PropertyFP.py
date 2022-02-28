@@ -25,7 +25,7 @@ def rdkit_2d_normalized_features(smiles: str):
 
 r = raw.MakeStore(columns, 939, "herg_store") # (columns, shujuliang+2 , kuming)
 
-for i in range(0,938): # shujuliang
+for i in range(0,938): # Data size
     if i == 703:
         continue
     index_mol = index.getMol(i)
@@ -34,12 +34,12 @@ for i in range(0,938): # shujuliang
     r.putRow(i, features)
     print(index_name, " ", i)
 
-r = raw.RawStore("herg_store") # ketiao kuming
+r = raw.RawStore("herg_store")
 head = r.colnames
 datain = []
 index_name = []
 
-for i in range(0,938): # shujuliang
+for i in range(0,938): # Data size
     if i == 703:
         continue
     putout = r.get(i)
