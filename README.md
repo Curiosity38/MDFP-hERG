@@ -1,2 +1,2 @@
-# MDFP
-A Multi-Dimensional Molecular Fingerprints to Predict hERG Cardiotoxicity of Compounds
+# MDFP-hERG
+Combining Multi-Dimensional Molecular Fingerprints to Predict hERG Cardiotoxicity of Compounds
