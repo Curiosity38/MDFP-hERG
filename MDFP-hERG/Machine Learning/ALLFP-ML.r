@@ -1,5 +1,3 @@
-setwd("/home/zl/zl/MDFP-hERG-3")
-
 library(tidyverse)
 library(caret)
 source("scatterplot.r")
