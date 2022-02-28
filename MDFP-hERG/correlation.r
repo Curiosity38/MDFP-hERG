@@ -1,11 +1,8 @@
-setwd("/home/zl/zl/MDFP-hERG-3")
-
 library(tidyverse)
 library(caret)
 source("scatterplot.r")
 
 IC50 <- read.csv("IC50_all.csv", stringsAsFactors  = FALSE, header = TRUE)
-# pIC50 <- select(IC50,-IC50)
 pIC50 <- IC50
 
 
@@ -32,7 +29,7 @@ ALLFP <- left_join(ALLFP, select(ECFP4, -pIC50, -Training.Test), by = "Name")
 MDFP_train <- filter(ALLFP, Training.Test == "Training") %>% select(-Name, -Training.Test)
 MDFP_test <- filter(ALLFP, Training.Test == "Test") %>% select(-Name, -Training.Test)
 
-#选择RFE选出的特征
+#Choose features seleted by RFE
 MDFP_rfe_predictors <- read.csv(file = "MDFP_rfe_predictors.csv", row.names = 1)
 MDFP3D11_rfe_predictors <- read.csv(file = "MDFP3D11_rfe_predictors.csv", row.names = 1)
 BaselineFP_rfe_predictors <- read.csv(file = "BaselineFP_rfe_predictors.csv", row.names = 1)
@@ -44,7 +41,7 @@ rfe_selected_predictors <- c(as.character(MDFP_rfe_predictors$x), as.character(M
 MDFP_train <- select(MDFP_train, pIC50, all_of(rfe_selected_predictors))
 
 
-#计算选择的特征与pIC50的相关性
+#Calculate the correlation of the selected features and pIC50
 cor_pearson <- cor(MDFP_train, MDFP_train$pIC50, method = "pearson")
 cor_kendall <- cor(MDFP_train,  MDFP_train$pIC50, method = "kendall")
 cor_spearman <- cor(MDFP_train,  MDFP_train$pIC50, method = "spearman")
