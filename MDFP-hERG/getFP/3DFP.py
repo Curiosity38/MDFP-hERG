@@ -8,7 +8,6 @@ def fix_valence_charge(mol):
         explicitValence = 0
         for bond in atom.GetBonds():
             explicitValence = explicitValence + bond.GetBondTypeAsDouble()
-        # print(atom.GetSymbol(), atom.GetDegree(), atom.GetFormalCharge(), explicitValence)
         atom.SetFormalCharge(0)
         if atom.GetSymbol() == 'N' and explicitValence > 3:
             atom.SetFormalCharge(int(explicitValence - 3))
