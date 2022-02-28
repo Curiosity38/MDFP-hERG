@@ -25,8 +25,6 @@ def getMDFPplus(m):
   fp.append(len(m.GetSubstructMatches(Chem.MolFromSmarts('[#17]')))) # chlorines
   fp.append(len(m.GetSubstructMatches(Chem.MolFromSmarts('[#35]')))) # bromines
   fp.append(len(m.GetSubstructMatches(Chem.MolFromSmarts('[#53]')))) # iodines
-#  for d in data:
-#      fp += _getStatsData(d)
   return fp
 
 # paths
