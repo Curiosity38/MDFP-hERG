@@ -41,18 +41,10 @@ ot15 = open('ot15.csv', 'a+')
 
 
 cnt = 0
-print("AUTOCORR3D_fps", file=ot1)
-for mol in mols:
-    AUTOCORR3D_fps = rdMolDescriptors.CalcAUTOCORR3D(mol)
-    cnt += 1
-    print(cnt, end = "", file=ot1)
-    for AUTOCORR3D_fp in AUTOCORR3D_fps:
-        print(",", AUTOCORR3D_fp, end = "", file=ot1, sep="")
-    print("\n", end = "", file=ot1)
 
 
 cnt = 0
-print("PBF_fps", file=ot2)
+print("PBF_fps", file=ot1)
 for mol in mols:
     PBF_fps = rdMolDescriptors.CalcPBF(mol)
     cnt += 1
@@ -60,7 +52,7 @@ for mol in mols:
 
 
 cnt = 0
-print("PMI1_fps", file=ot3)
+print("PMI1_fps", file=ot2)
 for mol in mols:
     PMI1_fps = rdMolDescriptors.CalcPMI1(mol)
     cnt += 1
@@ -68,7 +60,7 @@ for mol in mols:
 
 
 cnt = 0
-print("PMI2_fps", file=ot4)
+print("PMI2_fps", file=ot3)
 for mol in mols:
     PMI2_fps = rdMolDescriptors.CalcPMI2(mol)
     cnt += 1
@@ -76,7 +68,7 @@ for mol in mols:
 
 
 cnt = 0
-print("PMI3_fps", file=ot5)
+print("PMI3_fps", file=ot4)
 for mol in mols:
     PMI3_fps = rdMolDescriptors.CalcPMI3(mol)
     cnt += 1
@@ -84,15 +76,7 @@ for mol in mols:
 
 
 cnt = 0
-print("NPR1_fps", file=ot6)
-for mol in mols:
-    NPR1_fps = rdMolDescriptors.CalcNPR1(mol)
-    cnt += 1
-    print(cnt, NPR1_fps, file=ot6, sep=",")
-
-
-cnt = 0
-print("NPR2_fps", file=ot7)
+print("NPR2_fps", file=ot5)
 for mol in mols:
     NPR2_fps = rdMolDescriptors.CalcNPR2(mol)
     cnt += 1
@@ -100,7 +84,7 @@ for mol in mols:
 
 
 cnt = 0
-print("RG_fps", file=ot8)
+print("RG_fps", file=ot6)
 for mol in mols:
     RG_fps = rdMolDescriptors.CalcRadiusOfGyration(mol)
     cnt += 1
@@ -108,7 +92,7 @@ for mol in mols:
 
 
 cnt = 0
-print("SF_fps", file=ot9)
+print("SF_fps", file=ot7)
 for mol in mols:
     SF_fps = rdMolDescriptors.CalcInertialShapeFactor(mol)
     cnt += 1
@@ -116,15 +100,7 @@ for mol in mols:
 
 
 cnt = 0
-print("Ecc_fps", file=ot10)
-for mol in mols:
-    Ecc_fps = rdMolDescriptors.CalcEccentricity(mol)
-    cnt += 1
-    print(cnt, Ecc_fps, file=ot10, sep=",")
-
-
-cnt = 0
-print("Aspher_fps", file=ot11)
+print("Aspher_fps", file=ot8)
 for mol in mols:
     Aspher_fps = rdMolDescriptors.CalcAsphericity(mol)
     cnt += 1
@@ -132,44 +108,11 @@ for mol in mols:
 
 
 cnt = 0
-print("Spher_fps", file=ot12)
+print("Spher_fps", file=ot9)
 for mol in mols:
     Spher_fps = rdMolDescriptors.CalcSpherocityIndex(mol)
     cnt += 1
     print(cnt, Spher_fps, file=ot12, sep=",")
-
-
-cnt = 0
-print("RDF_fps", file=ot13)
-for mol in mols:
-    RDF_fps = rdMolDescriptors.CalcRDF(mol)
-    cnt += 1
-    print(cnt, end = "", file=ot13)
-    for RDF_fp in RDF_fps:
-        print(",", RDF_fp, end = "", file=ot13, sep="")
-    print("\n", end = "", file=ot13)
-
-
-cnt = 0
-print("MORSE_fps", file=ot14)
-for mol in mols:
-    MORSE_fps = rdMolDescriptors.CalcMORSE(mol)
-    cnt += 1
-    print(cnt, end = "", file=ot14)
-    for MORSE_fp in MORSE_fps:
-        print(",", MORSE_fp, end = "", file=ot14, sep="")
-    print("\n", end = "", file=ot14)
-
-
-cnt = 0
-print("WHIM_fps", file=ot15)
-for mol in mols:
-    WHIM_fps = rdMolDescriptors.CalcWHIM(mol)
-    cnt += 1
-    print(cnt, end = "", file=ot15)
-    for WHIM_fp in WHIM_fps:
-        print(",", WHIM_fp, end = "", file=ot15, sep="")
-    print("\n", end = "", file=ot15)
 
 
 ot1.close()
@@ -181,9 +124,3 @@ ot6.close()
 ot7.close()
 ot8.close()
 ot9.close()
-ot10.close()
-ot11.close()
-ot12.close()
-ot13.close()
-ot14.close()
-ot15.close()
