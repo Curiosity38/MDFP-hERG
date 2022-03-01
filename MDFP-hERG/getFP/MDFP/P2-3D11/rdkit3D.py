@@ -28,12 +28,6 @@ print("mol", end = "", file=ot)
 
 
 for mol in mols:
-    AUTOCORR3D_fps = rdMolDescriptors.CalcAUTOCORR3D(mol)
-    for AUTOCORR3D_fp in AUTOCORR3D_fps:
-        print(",", AUTOCORR3D_fp, end = "", file=ot, sep="")
-
-
-for mol in mols:
     PBF_fps = rdMolDescriptors.CalcPBF(mol)
     print(",", PBF_fps, file=ot, end=",", sep="")
 
@@ -51,11 +45,6 @@ for mol in mols:
 for mol in mols:
     PMI3_fps = rdMolDescriptors.CalcPMI3(mol)
     print(PMI3_fps, file=ot, end=",")
-
-
-for mol in mols:
-    NPR1_fps = rdMolDescriptors.CalcNPR1(mol)
-    print(NPR1_fps, file=ot, end=",")
 
 
 for mol in mols:
@@ -87,23 +76,6 @@ for mol in mols:
     Spher_fps = rdMolDescriptors.CalcSpherocityIndex(mol)
     print(Spher_fps, file=ot, end="")
 
-
-for mol in mols:
-    RDF_fps = rdMolDescriptors.CalcRDF(mol)
-    for RDF_fp in RDF_fps:
-        print(",", RDF_fp, end = "", file=ot, sep="")
-
-
-for mol in mols:
-    MORSE_fps = rdMolDescriptors.CalcMORSE(mol)
-    for MORSE_fp in MORSE_fps:
-        print(",", MORSE_fp, end = "", file=ot, sep="")
-
-
-for mol in mols:
-    WHIM_fps = rdMolDescriptors.CalcWHIM(mol)
-    for WHIM_fp in WHIM_fps:
-        print(",", WHIM_fp, end = "", file=ot, sep="")
 
 print("\n", end = "", file=ot)
 
