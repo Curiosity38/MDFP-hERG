@@ -63,11 +63,6 @@ for mol in mols:
 
 
 for mol in mols:
-    Ecc_fps = rdMolDescriptors.CalcEccentricity(mol)
-    print(Ecc_fps, file=ot, end=",")
-
-
-for mol in mols:
     Aspher_fps = rdMolDescriptors.CalcAsphericity(mol)
     print(Aspher_fps, file=ot, end=",")
 
